@@ -1,0 +1,60 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathrsfs,bm}
+\usepackage{natbib}
+\usepackage{graphicx}
+%\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\doublespacing
+
+\addtolength{\belowcaptionskip}{4pt}
+\DeclareMathOperator*{\argmax}{argmax}
+
+\title{Quiz 3}
+\author{Name:}% Put your name here
+
+\begin{document}
+
+\maketitle
+
+\section{Indicator variables}
+The data (\texttt{dat1.txt}) have two variables $x$ and $y$. There is a vector \texttt{set},
+indicating  that there are two sets of variables.
+
+\begin{enumerate}
+\item Read the data into an R session.
+\item Draw the scatter plot of the data.
+\item Write down a linear regression model for the data.
+\item Fit the model and present a summary for the coefficients.
+\item Present the anova table.
+\item Draw the regression line and 99\% point-wise confidence bands with $x$ in its range.
+\item One says that, "I do not know that whether I should fit two straight lines or one straight line".
+Please answer his question by re-analyzing the data.
+\end{enumerate}
+
+
+\section{Response transformation}
+
+The data (\texttt{dat2.txt}) have two variables: $x$, $y$.
+
+
+\begin{enumerate}
+\item Read the data into an R session.
+\item Write down a linear regression model for the data.
+\item Fit the simple linear model and present a summary for the coefficients.
+\item Perform the Box-Cox transformation
+\item Find the value of $\lambda$ that maximizes the profile log-likelihood 
+\item Present the profile log-likelihood plot
+\item Determine the appropriate value of $\lambda$ from the profile log-likelihood plot
+and justify your choice. 
+\item Analyze the model with the chosen transformation.
+\end{enumerate}
+
+
+\appendix
+\begin{verbatim}
+%Put your R codes here!
+\end{verbatim}
+\end{document}

@@ -1,0 +1,408 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\renewcommand{\textfraction}{0.15}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.65}
+\renewcommand{\floatpagefraction}{0.60}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{extarrows}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage[section]{placeins}
+\usepackage{flafter}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+\DeclareMathOperator*{\argmaxdown}{arg\,max}
+\DeclareMathOperator*{\argmindown}{arg\,min}
+\DeclareMathOperator{\argmax}{arg\,max}
+\DeclareMathOperator{\argmin}{arg\,min}
+
+
+\title{Quiz3 for Regression Analysis}
+\author{Chao Cheng\quad No.2014210744}
+\date{\today}
+
+
+
+\begin{document}
+\maketitle
+
+\section{Indicator variables}
+The data (\texttt{dat1.txt}) have two variables $x$ and $y$. There is a vector \texttt{set},
+indicating  that there are two sets of variables.
+
+\begin{enumerate}
+\item Draw the scatter plot of the data.
+\par
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\textwidth]{1_scatter}
+  \caption{Scatter plot of the data}
+  \label{fig:1_scatter}
+\end{figure}
+See Figure~\ref{fig:1_scatter} for the scatter plot of the data.
+
+
+\item Write down a linear regression model for the data.
+\par
+As we can see, all the data seems to lie in one straight line. So I write the linear model
+\[
+  y_i=\beta_0+\beta_1 x_i + \epsilon_i,\quad \epsilon_i\overset{i.i.d}{\sim} \mathrm{N}\left(0,\sigma^2\right)
+\]
+
+
+\item Fit the model and present a summary for the coefficients.
+\par
+The fitted model is
+\[
+  \hat{y}=1.0750+0.4923x
+\]
+and the summary table of the data is presented in Table~\ref{tab:1.summary}. As we can see, all the estimates are significant.
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+  \hline
+(Intercept) & 1.0750 & 0.2123 & 5.06 & 0.0023 \\ 
+  x & 0.4923 & 0.0286 & 17.24 & 0.0000 \\ 
+   \hline
+\end{tabular}
+  \caption{Summary table of the linear model}
+  \label{tab:1.summary}
+\end{table}
+
+\item Present the anova table.
+\par
+See Table~\ref{tab:1.anova} for the ANOVA of the model.
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{lrrrrr}
+  \hline
+ & Df & Sum Sq & Mean Sq & F value & Pr($>$F) \\ 
+  \hline
+x & 1 & 25.21 & 25.21 & 297.22 & 0.0000 \\ 
+  Residuals & 6 & 0.51 & 0.08 &  &  \\ 
+   \hline
+\end{tabular}
+  \caption{ANOVA of the model}
+  \label{tab:1.anova}
+\end{table}
+
+\item Draw the regression line and 99\% point-wise confidence bands with $x$ in its range.
+\par
+See Figure~\ref{fig:1.CI} for the 99\% confidence band plot of the data.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\textwidth]{1_confidence}
+  \caption{99\% confidence interval of the regression line}
+  \label{fig:1.CI}
+\end{figure}
+
+\item One says that, "I do not know that whether I should fit two straight lines or one straight line".
+Please answer his question by re-analyzing the data.
+\par
+We can fit the full model
+\[
+  Y_i=\beta_0+\beta_1X_i+\beta_2Set_i+\beta_3X_i:Set_i+\epsilon_i,\quad \epsilon_i\overset{i.i.d}{\sim} \mathrm{N}\left(0,\sigma^2\right)
+\]
+and compare this full model with our previously restricted model using ANOVA. The result is presented in Table~\ref{tab:1.anovacompare}. As we can see, the p-value is 0.4134, a faily large value. Hence we can not reject the null hypothesis, which means the restricted model is as good as the full model. 
+\par
+At this point, we can conlude that we do not need to fit 2 straight lines.
+
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{lrrrrrr}
+  \hline
+ & Res.Df & RSS & Df & Sum of Sq & F & Pr($>$F) \\ 
+  \hline
+Restricted model & 6 & 0.51 &  &  &  &  \\ 
+  Full model & 4 & 0.33 & 2 & 0.18 & 1.11 & 0.4134 \\ 
+   \hline
+\end{tabular}
+  \caption{ANOVA comparing two models}
+  \label{tab:1.anovacompare}
+\end{table}
+\end{enumerate}
+
+
+\section{Response transformation}
+The data (\texttt{dat2.txt}) have two variables: $x$, $y$.
+
+
+\begin{enumerate}
+\item Write down a linear regression model for the data.
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{2_scatter}
+    \caption{Scatter plot of the data}
+    \label{fig:2.scatter}
+  \end{figure}
+\par
+As we can see from Figure~\ref{fig:2.scatter}, there is clearly an up trend in the data. So I choose to fit a polynomial model.
+\[
+  y_i=\beta_0+\beta_1x_i+\beta_2x_i^2+\epsilon_i,\quad \epsilon_i\overset{i.i.d}{\sim} \mathrm{N}\left(0,\sigma^2\right)
+\]
+
+\item Fit the simple linear model and present a summary for the coefficients.
+\par
+The fitted model is
+\[
+  \hat{y}=848.23-440.32x+57.57x^2
+\]
+and the summary table is presented in Table~\ref{tab:2.summary}. The quadratic term in this model is significant, hence the whole model is significant.
+
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+  \hline
+(Intercept) & 848.2293 & 569.5061 & 1.49 & 0.1442 \\ 
+  x & -440.3181 & 247.3884 & -1.78 & 0.0827 \\ 
+  I(x\verb|^|2) & 57.5659 & 26.7817 & 2.15 & 0.0377 \\ 
+   \hline
+\end{tabular}
+  \caption{Summary of the polynomial model}
+  \label{tab:2.summary}
+\end{table}
+
+
+
+\item Perform the Box-Cox transformation
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{2_boxcox}
+    \caption{Box-Cox transformation of the response}
+    \label{fig:2.boxcox}
+  \end{figure}
+\par
+Figure~\ref{fig:2.boxcox} is the Box-Cox transformation of the response.
+
+
+\item Find the value of $\lambda$ that maximizes the profile log-likelihood 
+\par
+The value of $\lambda$ that maximizes the profile log-likelihood is 
+\[
+  \hat{\lambda}=0.4747
+\]
+\item Present the profile log-likelihood plot
+\par
+See Figure~\ref{fig:2.boxcox} for the details.
+
+\item Determine the appropriate value of $\lambda$ from the profile log-likelihood plot
+and justify your choice. 
+\par
+I think $\lambda_0=0.5$ is a good choice since it is within the 95\% confidence interval and very convenient to compute.
+
+\item Analyze the model with the chosen transformation.
+\par
+The transformed response is
+\[
+  v_i=\dot{y}^{1-\lambda_0}\left(y_i^{\lambda_0}-1\right)/\lambda_0
+\]
+where $\dot{y}=\left(\prod\limits_{i=1}^ny_i\right)^{1/n}$
+\par
+The fitted model is
+\[
+  \hat{v}=-348.86+91.52x
+\]
+The summary table is presented in Table~\ref{tab:2.transform}. As we can see, the regression is significant. Also refer to Figure~\ref{fig:2.scatter2}. The regression line fitted the data very well. What's more, some diagnostic figures are shown in Figure~\ref{fig:2.diag}. As far as we concern, the fitted seems to be good, although I have to say the first 2 Cook's distance is a little too large for the data set.
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+  \hline
+(Intercept) & -348.8626 & 38.6390 & -9.03 & 0.0000 \\ 
+  x & 91.5211 & 8.1577 & 11.22 & 0.0000 \\ 
+   \hline
+\end{tabular}
+  \caption{Summary table of the transformed response model}
+  \label{tab:2.transform}
+\end{table}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\textwidth]{2_fitted}
+  \caption{Scatter plot of the transformed data}
+  \label{fig:2.scatter2}
+\end{figure}
+
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{2_diagnostic}
+  \caption{Some diagnostic of the transformed model}
+  \label{fig:2.diag}
+\end{figure}
+\end{enumerate}
+
+
+
+
+
+
+
+
+\clearpage
+\appendix
+
+\section{R codes}
+\begin{verbatim}
+require(xtable)
+require(MASS)
+
+rm(list=ls())
+Data<-read.table("dat1.txt",header=T)
+str(Data)
+
+### scatter plot ###
+pdf("1_scatter.pdf")
+with(Data,plot(x,y,type="n"))
+with(Data[Data$set==1,],points(x,y,pch=2,col=2))
+with(Data[Data$set==2,],points(x,y,pch=3,col=3))
+legend(0,6,c("set=1","set=2"),pch=2:3,col=2:3)
+dev.off()
+### linear model ###
+Data.lm<-lm(y~x,data=Data)
+xtable(summary(Data.lm))
+xtable(anova(Data.lm))
+
+### confidence band ###
+new.x<-seq(min(Data$x),max(Data$x),length.out=10)
+plot.y<-predict(Data.lm,data.frame(x=new.x),interval="confidence",level=0.99)
+matlines(new.x,plot.y,col=c(1,4,4),lty=c(1,2,2))
+
+### dummy variable ###
+Data.lm2<-lm(y~x+set+set:x,data=Data)
+xtable(anova(Data.lm,Data.lm2))
+
+
+
+###### 2 ######
+rm(list=ls())
+Data<-read.table("dat2.txt",header=T)
+str(Data)
+
+### linear ###
+with(Data,plot(x,y))
+Data.lm<-lm(y~x+I(x^2),data=Data)
+xtable(summary(Data.lm))
+
+new.x<-seq(min(Data$x),max(Data$x),length.out=20)
+plot.y<-predict(Data.lm,data.frame(x=new.x))
+lines(new.x,plot.y)
+
+
+plot(Data.lm)
+
+### boxcox ###
+lambda<-boxcox(Data.lm,lambda=seq(0,1,0.05))
+lambda$x[which.max(lambda$y)]
+
+### appropiate lambda ###
+l0<-0.5
+n<-length(Data$y)
+ydot<-prod(Data$y)^(1/n)
+v<-ydot^(1-l0)*(Data$y^l0-1)/l0
+Data.lm2<-lm(v~x,data=Data)
+xtable(summary(Data.lm2))
+anova(Data.lm2)
+
+plot(Data$x,v,xlab="x",ylab="transformed response")
+abline(Data.lm2)
+
+plot(Data.lm2)
+
+res<-resid(Data.lm2)
+res_t<-rstudent(Data.lm2)
+res_s<-rstandard(Data.lm2)
+res_c<-cooks.distance(Data.lm2)
+
+plot(abs(res),type="h")
+plot(abs(res_t),type="h")
+plot(abs(res_s),type="h")
+plot(res_c,type="h")
+
+
+\end{verbatim}
+
+
+\end{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%Subfigure
+\begin{figure}[htb]
+\centering
+\begin{subfigure}[h]{0.49\textwidth}
+\centering
+\includegraphics[width=\textwidth]{5_23contour}
+\caption{Contour Graphic}
+\end{subfigure}
+\begin{subfigure}[h]{0.49\textwidth}
+\centering
+\includegraphics[width=\textwidth]{5_23lattice}
+\caption{Lattice Graphic}
+\end{subfigure}
+\caption{\label{fig:5.23.contour}}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%TukeyHSD
+\par
+\makeatletter\def\@captype{figure}\makeatother
+\begin{minipage}{.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{5_10tukeyplot}
+\caption{Comparing Yield according to Pressure}
+\label{fig:5.10.tukeyplot}
+\end{minipage}
+\makeatletter\def\@captype{table}\makeatother
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & diff & lwr & upr & p adj \\
+  \hline
+215-200 & 0.32 & 0.11 & 0.52 & 0.00 \\
+  230-200 & -0.18 & -0.39 & 0.02 & 0.08 \\
+  230-215 & -0.50 & -0.70 & -0.30 & 0.00 \\
+   \hline
+\end{tabular}
+\caption{Tukey multiple comparisons}
+\label{tab:5.10.tukeytable}
+\end{minipage}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%custimize \item
+\newcounter{Lcount}
+\setcounter{Lcount}{0}
+\begin{list}{2.1.\arabic{Lcount}}{\usecounter{Lcount}}
+\item
+\arabic 1, 2, 3 ...
+\alph a, b, c ...
+\Alph A, B, C ...
+\roman i, ii, iii ...
+\Roman I, II, III ...
+\fnsymbol ÐÇºÅ£¬µ¥½£ºÅ£¬Ë«½£ºÅµÈ
+
+
+\end{list}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

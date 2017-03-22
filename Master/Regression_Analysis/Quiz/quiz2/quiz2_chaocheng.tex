@@ -1,0 +1,456 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\renewcommand{\textfraction}{0.15}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.65}
+\renewcommand{\floatpagefraction}{0.60}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{extarrows}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage[section]{placeins}
+\usepackage{flafter}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+\DeclareMathOperator*{\argmaxdown}{arg\,max}
+\DeclareMathOperator*{\argmindown}{arg\,min}
+\DeclareMathOperator{\argmax}{arg\,max}
+\DeclareMathOperator{\argmin}{arg\,min}
+
+
+\title{Quiz2 for Regression Analysis}
+\author{Chao Cheng\quad No.2014210744}
+\date{\today}
+
+
+
+\begin{document}
+\maketitle
+
+\section{Weighted least squares}
+The data (\texttt{wls.txt}) have two variables $x$ and $y$. There is a weight vector \texttt{w}
+
+\begin{enumerate}
+\item Draw the scatter plot of the data.
+\par
+See Figure~\ref{fig:w.scatter} for the scatter plot of the data.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{W_scatter}
+  \caption{Scatter plot and the weighted least square line}
+  \label{fig:w.scatter}
+\end{figure}
+
+
+\item Write down a linear regression model for the data. Be careful because there is a weighted least squares example.
+\par
+The weighted linear regression model could be writtten in matrix form
+\[
+  Y=X\beta+\epsilon,\quad \epsilon\sim\sigma^2 W
+\]
+where $W=\mathrm{diag}\left(w_1,w_2,\cdots,w_n\right)$.
+
+\item Fit the model and present a summary for the coefficients.
+\par 
+The fitted model is
+\[
+  \hat{Y}=0.9804+0.4813X
+\]
+
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+  \hline
+(Intercept) & 0.9804 & 0.4548 & 2.16 & 0.0449 \\ 
+  x & 0.4813 & 0.1014 & 4.75 & 0.0002 \\ 
+   \hline
+\end{tabular}
+  \caption{Summary table of the weighted least square regression model}
+  \label{tab:w.summary}
+\end{table}
+
+and the summary table for this regression is presented in Table~\ref{tab:w.summary}. As we can see, the regression is significant.
+
+
+\item Present the anova table.
+\par
+Table~\ref{tab:w.anova} is the ANOVA table.
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{lrrrrr}
+  \hline
+ & Df & Sum Sq & Mean Sq & F value & Pr($>$F) \\ 
+  \hline
+x & 1 & 17.55 & 17.55 & 22.54 & 0.0002 \\ 
+  Residuals & 18 & 14.02 & 0.78 &  &  \\ 
+   \hline
+\end{tabular}
+  \caption{ANOVA table}
+  \label{tab:w.anova}
+\end{table}
+
+
+\item Draw the regression line and 99\% point-wise confidence bands with $X$ in its range.
+\par
+See Figure~\ref{fig:w.ci} for the details.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{W_CI}
+  \caption{99\% Confidence band of the model}
+  \label{fig:w.ci}
+\end{figure}
+\end{enumerate}
+
+
+\section{Polynomial regression}
+
+The data (\texttt{poly.txt}) have two variables: $x$, $y$.
+
+
+\begin{enumerate}
+\item Write down a linear regression model for the data.
+\par
+\[
+  Y=X\beta+\epsilon, \quad \epsilon\overset{iid}{\sim} \mathrm{N}\left(0,\sigma^2\right)
+\]
+
+\item Fit the simple linear model and present a summary for the coefficients.
+\par
+The fitted model is
+\[
+  \hat{Y}=6.665+1.063X
+\]
+The summary table is presented in Table~\ref{tab:p.summary1}
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+  \hline
+(Intercept) & 6.6655 & 1.4838 & 4.49 & 0.0015 \\ 
+ $x$ & 1.0627 & 0.4692 & 2.26 & 0.0498 \\ 
+   \hline
+\end{tabular}
+  \caption{Summary table for the simple linear model}
+  \label{tab:p.summary1}
+\end{table}
+
+
+\item Fit the quadratic model and present a summary for the coefficients.
+\par
+The fitted model is
+\[
+  \hat{Y}=1.7482+1.0627X+0.4917X^2
+\]
+and the summary table is presented in Table~\ref{tab:p.summary2}.
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+  \hline
+(Intercept) & 1.7482 & 0.5222 & 3.35 & 0.0101 \\ 
+  $x$ & 1.0627 & 0.1093 & 9.72 & 0.0000 \\ 
+  $x^2$ & 0.4917 & 0.0391 & 12.56 & 0.0000 \\ 
+   \hline
+\end{tabular}
+  \caption{Summary table for the quadratic model}
+  \label{tab:p.summary2}
+\end{table}
+\item Fit the cubic model and present a summary for the coefficients.
+\par
+The fitted model is
+\[
+  \hat{Y}=1.748205+0.999452X+0.491725X^2+0.003555X^3
+\]
+and the summary table is presented in Table~\ref{tab:p.summary3}
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+  \hline
+(Intercept) & 1.7482 & 0.5562 & 3.14 & 0.0163 \\ 
+  $x$ & 0.9995 & 0.3001 & 3.33 & 0.0126 \\ 
+  $x^2$ & 0.4917 & 0.0417 & 11.80 & 0.0000 \\ 
+  $x^3$ & 0.0036 & 0.0155 & 0.23 & 0.8256 \\ 
+   \hline
+\end{tabular}
+  \caption{Summary table for cubic model}
+  \label{tab:p.summary3}
+\end{table}
+
+
+\item Present the anova tables for three fitted models.
+  \begin{table}[htbp]
+    \centering
+    \begin{tabular}{lrrrrr}
+  \hline
+ & Df & Sum Sq & Mean Sq & F value & Pr($>$F) \\ 
+  \hline
+x & 1 & 124.23 & 124.23 & 5.13 & 0.0498 \\ 
+  Residuals & 9 & 217.97 & 24.22 &  &  \\ 
+   \hline
+\end{tabular}
+    \caption{ANOVA table for simple linear model}
+    \label{tab:p.anova1}
+  \end{table}
+
+  \begin{table}[htbp]
+    \centering
+    \begin{tabular}{lrrrrr}
+  \hline
+ & Df & Sum Sq & Mean Sq & F value & Pr($>$F) \\ 
+  \hline
+$x$ & 1 & 124.23 & 124.23 & 94.51 & 0.0000 \\ 
+ $x^2$ & 1 & 207.46 & 207.46 & 157.82 & 0.0000 \\ 
+  Residuals & 8 & 10.52 & 1.31 &  &  \\ 
+   \hline
+\end{tabular}
+    \caption{ANOVA table for quadratic model}
+    \label{tab:p.anova2}
+  \end{table}
+
+  \begin{table}[htbp]
+    \centering
+    \begin{tabular}{lrrrrr}
+  \hline
+ & Df & Sum Sq & Mean Sq & F value & Pr($>$F) \\ 
+  \hline
+$x$ & 1 & 124.23 & 124.23 & 83.32 & 0.0000 \\ 
+ $x^2$ & 1 & 207.46 & 207.46 & 139.13 & 0.0000 \\ 
+$x^3$ & 1 & 0.08 & 0.08 & 0.05 & 0.8256 \\ 
+  Residuals & 7 & 10.44 & 1.49 &  &  \\ 
+   \hline
+\end{tabular}
+    \caption{ANOVA table for cubic model}
+    \label{tab:p.anova3}
+  \end{table}
+
+
+Please refer to Table~\ref{tab:p.anova1}, Table~\ref{tab:p.anova2} and Table~\ref{tab:p.anova3} for the ANOVA tables of these 3 models.
+
+
+\item Present the scatter plot and draw three regression curves.
+See Figure~\ref{fig:p.ci} for the scatter plot and 3 regression curves. Note that the cubic line are very close to the quadratic line.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{P_CI}
+  \caption{Scatter plot and 3 fitted lines of the data}
+  \label{fig:p.ci}
+\end{figure}
+
+
+\item Choose the model that seems appropriate and justify your choice.
+\par
+I choose quadratic model and below are my reasons.
+\par
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{lrrrrrr}
+  \hline
+ & Res.Df & RSS & Df & Sum of Sq & F & Pr($>$F) \\ 
+  \hline
+Simple linear & 9 & 217.97 &  &  &  &  \\ 
+  Quadratic & 8 & 10.52 & 1 & 207.46 & 157.82 & 0.0000 \\ 
+   \hline
+\end{tabular}
+  \caption{ANOVA comapre quadratic and simple linear models}
+  \label{tab:p.anova12}
+\end{table}
+
+Table~\ref{tab:p.anova12} compares the difference between quadratic and the simple linear models. As we can see, p-value is very small and the difference is significant.
+
+
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{lrrrrrr}
+  \hline
+ & Res.Df & RSS & Df & Sum of Sq & F & Pr($>$F) \\ 
+  \hline
+Quadratic & 8 & 10.52 &  &  &  &  \\ 
+ Cubic & 7 & 10.44 & 1 & 0.08 & 0.05 & 0.8256 \\ 
+   \hline
+\end{tabular}
+  \caption{ANOVA compare cubic and quadradtic models}
+  \label{tab:q.anova23}
+\end{table}
+
+Table~\ref{tab:q.anova23} compare the difference between cubic and quadratic models using ANOVA. As we can see, p-value is 0.8256 hence the difference between these 2 models are not significant.
+
+\par
+Also, from Table~\ref{tab:p.summary2}, the regression parameters are significant. And again, Figure~\ref{fig:p.ci} supports my decision that quadratic model is adequate.
+
+
+\end{enumerate}
+
+
+
+\clearpage
+\appendix
+
+\section{R codes}
+\begin{verbatim}
+require(xtable)
+
+### weighted
+rm(list=ls())
+Data<-read.table("wls.txt",header=T)
+str(Data)
+with(Data,plot(x,y))
+
+
+Data.lm<-lm(y~x,data=Data,weights=w)
+abline(Data.lm)
+
+pdf("W_scatter.pdf")
+with(Data,plot(x,y))
+abline(Data.lm)
+dev.off()
+
+
+summary(Data.lm)
+anova(Data.lm)
+
+xtable(summary(Data.lm))
+xtable(anova(Data.lm))
+
+new.x<-seq(min(Data$x),max(Data$x),length.out=100)
+plot.y<-predict(Data.lm,newdata=data.frame(x=new.x),interval="confidence",level=0.99)
+
+pdf("W_CI.pdf")
+with(Data,plot(x,y))
+matlines(new.x,plot.y,col=c(1,2,2),lty=c(1,2,2),lwd=2)
+legend(1.5,7,c("fitted line","99% confidence band"),lty=1:2,col=1:2,lwd=2)
+dev.off()
+
+###### plolynomial ######
+rm(list=ls())
+Data<-read.table("poly.txt",header=T)
+str(Data)
+Data.lm<-lm(y~x,data=Data)
+summary(Data.lm)
+xtable(summary(Data.lm))
+
+## quadratic
+Data.lm2<-lm(y~x+I(x^2),data=Data)
+summary(Data.lm2)
+xtable(summary(Data.lm2))
+
+## cubic
+Data.lm3<-lm(y~x+I(x^2)+I(x^3),data=Data)
+summary(Data.lm3)
+xtable(summary(Data.lm3))
+
+### anova
+anova(Data.lm)
+anova(Data.lm2)
+anova(Data.lm3)
+
+xtable(anova(Data.lm))
+xtable(anova(Data.lm2))
+xtable(anova(Data.lm3))
+
+### scatter plot
+pdf("P_CI.pdf")
+with(Data,plot(x,y))
+abline(Data.lm,col=2,lwd=2)
+new.x<-seq(min(Data$x),max(Data$x),length.out=100)
+y1<-predict(Data.lm2,newdata=data.frame(x=new.x))
+y2<-predict(Data.lm3,newdata=data.frame(x=new.x))
+matlines(new.x,cbind(y1,y2),lty=1,col=3:4,lwd=2)
+legend(-3,17,c("linear","quadratic","cubic"),lty=1,col=2:4,lwd=2)
+dev.off()
+### model choose###
+anova(Data.lm,Data.lm2)
+anova(Data.lm2,Data.lm3)
+
+xtable(anova(Data.lm,Data.lm2))
+xtable(anova(Data.lm2,Data.lm3))
+
+
+\end{verbatim}
+
+
+
+\end{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%Subfigure
+\begin{figure}[htb]
+\centering
+\begin{subfigure}[h]{0.49\textwidth}
+\centering
+\includegraphics[width=\textwidth]{5_23contour}
+\caption{Contour Graphic}
+\end{subfigure}
+\begin{subfigure}[h]{0.49\textwidth}
+\centering
+\includegraphics[width=\textwidth]{5_23lattice}
+\caption{Lattice Graphic}
+\end{subfigure}
+\caption{\label{fig:5.23.contour}}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%TukeyHSD
+\par
+\makeatletter\def\@captype{figure}\makeatother
+\begin{minipage}{.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{5_10tukeyplot}
+\caption{Comparing Yield according to Pressure}
+\label{fig:5.10.tukeyplot}
+\end{minipage}
+\makeatletter\def\@captype{table}\makeatother
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & diff & lwr & upr & p adj \\
+  \hline
+215-200 & 0.32 & 0.11 & 0.52 & 0.00 \\
+  230-200 & -0.18 & -0.39 & 0.02 & 0.08 \\
+  230-215 & -0.50 & -0.70 & -0.30 & 0.00 \\
+   \hline
+\end{tabular}
+\caption{Tukey multiple comparisons}
+\label{tab:5.10.tukeytable}
+\end{minipage}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%custimize \item
+\newcounter{Lcount}
+\setcounter{Lcount}{0}
+\begin{list}{2.1.\arabic{Lcount}}{\usecounter{Lcount}}
+\item
+\arabic 1, 2, 3 ...
+\alph a, b, c ...
+\Alph A, B, C ...
+\roman i, ii, iii ...
+\Roman I, II, III ...
+\fnsymbol ÐÇºÅ£¬µ¥½£ºÅ£¬Ë«½£ºÅµÈ
+
+
+\end{list}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

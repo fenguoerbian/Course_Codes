@@ -1,0 +1,56 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathrsfs,bm}
+\usepackage{natbib}
+\usepackage{graphicx}
+%\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\doublespacing
+
+\addtolength{\belowcaptionskip}{4pt}
+\DeclareMathOperator*{\argmax}{argmax}
+
+\title{Quiz 2}
+\author{Name:}% Put your name here
+
+\begin{document}
+
+\maketitle
+
+\section{Weighted least squares}
+The data (\texttt{wls.txt}) have two variables $x$ and $y$. There is a weight vector \texttt{w}
+
+\begin{enumerate}
+\item Read the data into an R session.
+\item Draw the scatter plot of the data.
+\item Write down a linear regression model for the data. Be careful because there is a weighted least squares example.
+\item Fit the model and present a summary for the coefficients.
+\item Present the anova table.
+\item Draw the regression line and 99\% point-wise confidence bands with $X$ in its range.
+\end{enumerate}
+
+
+\section{Polynomial regression}
+
+The data (\texttt{poly.txt}) have two variables: $x$, $y$.
+
+
+\begin{enumerate}
+\item Read the data into an R session.
+\item Write down a linear regression model for the data.
+\item Fit the simple linear model and present a summary for the coefficients.
+\item Fit the quadratic model and present a summary for the coefficients.
+\item Fit the cubic model and present a summary for the coefficients.
+\item Present the anova tables for three fitted models.
+\item Present the scatter plot and draw three regression curves.
+\item Choose the model that seems appropriate and justify your choice.
+\end{enumerate}
+
+
+\appendix
+\begin{verbatim}
+%Put your R codes here!
+\end{verbatim}
+\end{document}

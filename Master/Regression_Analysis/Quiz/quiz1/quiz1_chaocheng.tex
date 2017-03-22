@@ -1,0 +1,187 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\renewcommand{\textfraction}{0.15}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.65}
+\renewcommand{\floatpagefraction}{0.60}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{extarrows}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage[section]{placeins}
+\usepackage{flafter}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+\title{Quiz 1}
+\author{Chao Cheng\quad No.2014210744 }
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Analysis}
+
+A study was made on the effect of iron content on the corossion of an alloy.
+A linear model $y_i=\beta_0+\beta_1 x_i +\epsilon_i$ is assumed.
+
+\begin{enumerate}
+\item Calculate the estimators $b_0$ for $\beta_0$ and $b_1$ for $\beta_1$.
+\par
+From the fitted model we have $b_0=129.79$ and $b_1=-24.02$. See Table~\ref{tab:summary}.
+\par
+
+\item Calculate the standard errors of $b_0$ for $\beta_0$
+\par
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+  \hline
+$\beta_0$ & 129.7866 & 1.4027 & 92.52 & 0.0000 \\ 
+ $\beta_1$ & -24.0199 & 1.2798 & -18.77 & 0.0000 \\ 
+   \hline
+\end{tabular}
+  \caption{Summary table of the fitted model}
+  \label{tab:summary}
+\end{table}
+\par
+The standard error of $b_0$ is 1.403 and the standard error of $b_1$ is 1.280. See Table~\ref{tab:summary} for details.
+\par
+
+
+
+\item Test $H_0:\beta_1=0$ and $H_1:\beta_1\neq 0$ using the $t$-test.
+Calculate the $t$ statistic and p-value.
+\par
+The $t$ statistic is -18.77 and the corresponding p-value is $1.06\times 10^{-9}$. See Table~\ref{tab:summary} for details.
+\par
+
+
+
+\item Test $H_0:\beta_0=0$ and $H_1:\beta_0\neq 0$ using the $t$-test.
+Calculate the $t$ statistic and p-value.
+\par
+The $t$ statistic is 92.52 and the corresponding p-value is less than $2\times 10^{-16}$. See Table~\ref{tab:summary} for details.
+\par
+
+
+
+
+\item Calculate the 99\% confidence interval for
+$m(x)=\beta_0+\beta_1 x$ for $x=0$, $x=-5$ and $x=5$.
+\par
+See Table~\ref{tab:confidence} for the details.
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{rrrr}
+  \hline
+$X$ & fitted value & lower bound & upper bound \\ 
+  \hline
+0 & 129.79 & 125.43 & 134.14 \\ 
+ -5 & 249.89 & 226.39 & 273.38 \\ 
+  5 & 9.69 & -6.93 & 26.30 \\ 
+   \hline
+\end{tabular}
+  \caption{99\% confidence interval}
+  \label{tab:confidence}
+\end{table}
+\par
+
+
+\item Present the analysis of variance table.
+\par
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{lrrrrr}
+  \hline
+ & Df & Sum Sq & Mean Sq & F value & Pr($>$F) \\ 
+  \hline
+X & 1 & 3293.77 & 3293.77 & 352.27 & 0.0000 \\ 
+  Residuals & 11 & 102.85 & 9.35 &  &  \\ 
+   \hline
+\end{tabular}
+    \caption{Anova of the fitted model}
+    \label{tab:anova}
+\end{table}
+\par
+See Table~\ref{tab:anova} for the analysis of variance table.
+\par
+
+\item Perform the overall $F$ test.
+\par
+The $F$ statistic is 352.27 with degree of freedom 1 and 11, and the corresponding p-value is $1.05\times 10^{-9}$. See Table~\ref{tab:anova} for details.
+\par
+
+
+
+\item Plot the scatter plot of $y$ against $x$.
+Add the regression line. Add the fitted values against $x$
+\par
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{scatterplot}
+  \caption{Scatter plot of the data}
+  \label{fig:scatterplot}
+\end{figure}
+\par
+See Figure~\ref{fig:scatterplot} for details. The red dots are the fitted values and the white circles are the data points.
+\par
+
+\item Plot the residuals against the fitted values.
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{residual}
+    \caption{Residuals against fitted values}
+    \label{fig:residuals}
+  \end{figure}
+\par
+See Figure~\ref{fig:residuals} for details. There seems to be a curve pattern in this figure which means the linear model might not be very good. But given the hard truth that there are only 12 obeservations gathered which is a fairly small dataset, we must treat that conclusion very cautiously. And a better thing to do here is to try to collect more data. 
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\appendix
+\section*{Appendix: R codes}
+\begin{verbatim}
+require(xtable)
+Data<-read.table("dat.txt",header=T)
+str(Data)
+fit.lm<-lm(Y~X,data=Data)
+
+summary(fit.lm)
+xtable(summary(fit.lm))
+
+new.x<-data.frame(X=c(0,-5,5))
+conf.Y<-predict(fit.lm,newdata = new.x,interval = "confidence",level = 0.99)
+xtable(conf.Y)
+
+anova(fit.lm)
+xtable(anova(fit.lm))
+
+pdf("scatterplot.pdf")
+with(Data,plot(X,Y))
+abline(fit.lm)
+points(Data$X,fit.lm$fitted.values,pch=16,cex=0.75,col="red")
+dev.off()
+
+pdf("residual.pdf")
+plot(fit.lm$fitted.values,fit.lm$residuals,xlab="fitted values",ylab="residulas")
+abline(h=0,lty=2)
+dev.off()
+\end{verbatim}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
